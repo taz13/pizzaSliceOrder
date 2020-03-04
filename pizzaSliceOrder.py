@@ -1,9 +1,10 @@
 # Open a file
-inputFile = open("b_small.in", "r");
-print(inputFile.name);
+inputFile = open("e_also_big.in", "r");
+
 fileLines = inputFile.readlines()
 maxSlice = int(fileLines[0].split(" ")[0])
 numberOfPizzaType = int(fileLines[0].split(" ")[1])
+
 print("Maximum slice: ", maxSlice)
 print("Number of Pizza Type: ", numberOfPizzaType)
 
@@ -12,20 +13,44 @@ print("Pizza slice map: ", pizzaSliceMap)
 print("Pizza slice map size: ", len(pizzaSliceMap))
 
 countPizzaSliceOrder = int(pizzaSliceMap[numberOfPizzaType - 1])
+pizzaTypeCount = 1;
+pizzaSliceIndex = []
+pizzaSliceIndex.append(numberOfPizzaType - 1)
+index = numberOfPizzaType - 1;
+remainingSlices = int(maxSlice) - countPizzaSliceOrder
 
-index = numberOfPizzaType - 2;
-remainingSlices = int(maxSlice)
-
-
+#For finding the index of the next pizza type
 def findNextIndex(endIndex):
-    while ()
+    resultIndex = -1
+    while int(pizzaSliceMap[endIndex]) > remainingSlices:
+        endIndex = endIndex - 1
+        if endIndex < 0:
+            break;
+    resultIndex = endIndex
+    return resultIndex
 
-
+#Loops through the pizza slice map and adds the pizza slice count
 while countPizzaSliceOrder < maxSlice:
-    index = findNextIndex(index);
-    countPizzaSliceOrder = countPizzaSliceOrder + pizzaSliceMap[index];
-    print("Order count: ", findNextIndex(4))
-    if index <= 0:
+    pizzaSliceIndex = pizzaSliceIndex
+    endIndex = index - 1;
+    index = findNextIndex(endIndex);
+
+    if index < 0:
         break
-    
-print("Order count: ", countPizzaSliceOrder)
+    else:
+        pizzaSliceIndex.append(index)
+        countPizzaSliceOrder = countPizzaSliceOrder + int(pizzaSliceMap[index])
+        pizzaTypeCount = pizzaTypeCount + 1
+        remainingSlices = maxSlice - countPizzaSliceOrder
+
+print(pizzaTypeCount)
+print(pizzaSliceIndex)
+
+f = open("e_also_big_result.txt", "a")
+f.writelines(str(pizzaTypeCount)+"\n")
+
+indexCount = len(pizzaSliceIndex) - 1
+while(indexCount>=0):
+    f.write(str(pizzaSliceIndex[indexCount]) + " ")
+    indexCount = indexCount - 1
+f.close()
